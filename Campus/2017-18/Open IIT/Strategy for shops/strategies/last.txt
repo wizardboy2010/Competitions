@@ -1,0 +1,13 @@
+
+WHAT CAN WE DO WHEN CPI OR THE NSDP CHANGES ?
+
+We found the correlation matrix between CPI , NSDP per capita and sales of all the different kinds of SKUs. 
+
+For CPI : We found that the linear correlation was highest between Avg. CPI and Wellness (0.36) and was closest to zero between Avg. CPI and Staples (0.06).
+For NSDP per capita : We found that the the linear correlation was highest between NSDP and Staples (0.36) and was closest to zero between NSDP and Farm Fresh (0.00).
+
+In case of decrease in CPI of India, we will assume that this decrease will linearly affect decrease in value of Avg CPI of all the cities. By this assumption we can also say that the sales of Wellness SKU will decrease along with the decrease in CPI and that the sales of Staples SKU will remain almost the same as it is not too much correlated with CPI. So what we can do is introduce special offers that will correlate the sales of Wellness SKU with Staples SKU, i.e. Give special discounts on buying some products related to Wellness SKU or bundle up the products of Staples SKU with buying of products of Wellness SKU.
+
+Similarly we can do in case of decrease in NSDP per capita of a state. In this case we can say that decrease in NSDP per capita will result in significant decrease in sales of products of Staples SKU but the sales of products of Farm Fresh SKU will remain mostly the same. So we can bundle products of Farm Fresh SKU along with buying of products of Staples SKU.
+
+The reverse process can be implemented when the CPI or the NSDP will increase. I.e. we will bundle up products of Staples SKU along with products of Farm Fresh SKU.
