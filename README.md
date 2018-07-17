@@ -1,2 +1,2 @@
-# Projects-and-Competitions
-All the Competitions or Projects that I have done
+# Competitions
+All the Competitions that I have done
