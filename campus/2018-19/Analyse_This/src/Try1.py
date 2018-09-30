@@ -7,7 +7,7 @@ import numpy as np
 # data_path = os.path.join(os.path.dirname(path), 'data')
 # data = pd.read_csv(os.path.join(data_path,'Training_dataset_Original.csv'))
 
-data = pd.read_csv('campus/2018-19/Analyse_This/data/Training_dataset_Original.csv', low_memory=False)
+data = pd.read_csv('data/Training_dataset_Original.csv', low_memory=False)
 
 def assign_missing(val):
     if val in ['missing', 'na', 'NA', 'Na', 'Nan', 'NaN', 'N/A']:
@@ -111,7 +111,7 @@ print('test_acc', accuracy_score(y_test,nn_1.predict_classes(x_test)))
 
 # data = pd.read_csv(os.path.join(data_path,'Evaluation_dataset.csv.csv'))
 
-sub_data = pd.read_csv('campus/2018-19/Analyse_This/data/Leaderboard_dataset.csv', low_memory=False)
+sub_data = pd.read_csv('data/Leaderboard_dataset.csv', low_memory=False)
 
 sub_data = sub_data.applymap(lambda x: assign_missing(x))
 
