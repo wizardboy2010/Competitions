@@ -2,12 +2,16 @@ import pandas as pd
 import os
 import numpy as np
 
-# path = os.path.dirname(os.path.realpath(__file__))
-# print(path)
-# data_path = os.path.join(os.path.dirname(path), 'data')
-# data = pd.read_csv(os.path.join(data_path,'Training_dataset_Original.csv'))
+try:
+    path = os.path.dirname(os.path.realpath(__file__))
+except:
+    path = 'E:/ubuntu_data/Projects/Competitions/campus/2018-19/Analyse_This/src'
 
-data = pd.read_csv('campus/2018-19/Analyse_This/data/Training_dataset_Original.csv', low_memory=False)
+os.chdir(path)
+
+data_path = os.path.join(os.path.dirname(path), 'data')
+
+data = pd.read_csv(os.path.join(data_path,'Training_dataset_Original.csv'), low_memory=False)
 
 def assign_missing(val):
     if val in ['missing', 'na', 'NA', 'Na', 'Nan', 'NaN', 'N/A']:
@@ -139,9 +143,7 @@ print('test acc', nb_1.score(x_test, y_test))
 #########################################################################################
 ## Submission
 
-# data = pd.read_csv(os.path.join(data_path,'Evaluation_dataset.csv.csv'))
-
-sub_data = pd.read_csv('campus/2018-19/Analyse_This/data/Leaderboard_dataset.csv', low_memory=False)
+sub_data = pd.read_csv(os.path.join(data_path,'Leaderboard_dataset.csv'), low_memory=False)
 
 sub_data = sub_data.applymap(lambda x: assign_missing(x))
 
