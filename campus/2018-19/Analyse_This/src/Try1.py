@@ -7,7 +7,7 @@ import numpy as np
 # data_path = os.path.join(os.path.dirname(path), 'data')
 # data = pd.read_csv(os.path.join(data_path,'Training_dataset_Original.csv'))
 
-data = pd.read_csv('data/Training_dataset_Original.csv', low_memory=False)
+data = pd.read_csv('campus/2018-19/Analyse_This/data/Training_dataset_Original.csv', low_memory=False)
 
 def assign_missing(val):
     if val in ['missing', 'na', 'NA', 'Na', 'Nan', 'NaN', 'N/A']:
@@ -106,12 +106,24 @@ nn_1.fit(x_train, y_train,
 print('train_acc', accuracy_score(y_train,nn_1.predict_classes(x_train)))
 print('test_acc', accuracy_score(y_test,nn_1.predict_classes(x_test)))
 
+##################### fifth try
+from xgboost import XGBClassifier
+for i in range(2,10):
+    print('for', i)
+    xgb_model1 = XGBClassifier(max_depth=i, learning_rate = 0.1, random_state =42)
+    xgb_model1.fit(x_train, y_train)
+
+    print('train acc', xgb_model1.score(x_train, y_train))
+    print('test acc', xgb_model1.score(x_test, y_test))
+
+xgb_model1.feature_importances_
+
 #########################################################################################
 ## Submission
 
 # data = pd.read_csv(os.path.join(data_path,'Evaluation_dataset.csv.csv'))
 
-sub_data = pd.read_csv('data/Leaderboard_dataset.csv', low_memory=False)
+sub_data = pd.read_csv('campus/2018-19/Analyse_This/data/Leaderboard_dataset.csv', low_memory=False)
 
 sub_data = sub_data.applymap(lambda x: assign_missing(x))
 
@@ -147,3 +159,6 @@ sub.to_csv('Loosers_IITKgp_4.csv', header=False)
 sub.default = nn_1.predict_classes(sub_x)
 sub.to_csv('Loosers_IITKgp_5.csv', header=False)
 
+########## fifth try
+sub.default = xgb_model1.predict(sub_x)
+sub.to_csv('Loosers_IITKgp_6.csv', header=False)
