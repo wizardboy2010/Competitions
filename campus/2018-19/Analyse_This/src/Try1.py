@@ -37,7 +37,7 @@ for i in des.columns:
 x = data.values[:,1:-1]
 y = data.values[:,-1].astype(int)
 
-from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import StandardScaler
 
 sc = StandardScaler()
 x[:,:-1] = sc.fit_transform(x[:,:-1])
@@ -118,6 +118,24 @@ for i in range(2,10):
 
 xgb_model1.feature_importances_
 
+########################### 7th try
+from sklearn.neighbors import KNeighborsClassifier
+
+knn_1 = KNeighborsClassifier(n_neighbors=3, p =1)
+knn_1.fit(x_train, y_train)
+
+print('train acc', knn_1.score(x_train, y_train))
+print('test acc', knn_1.score(x_test, y_test))
+
+########################### 8th try .......... Naive Bayes
+from sklearn.naive_bayes import GaussianNB
+
+nb_1 = GaussianNB()
+nb_1.fit(x_train, y_train)
+
+print('train acc', nb_1.score(x_train, y_train))
+print('test acc', nb_1.score(x_test, y_test))
+
 #########################################################################################
 ## Submission
 
@@ -159,6 +177,14 @@ sub.to_csv('Loosers_IITKgp_4.csv', header=False)
 sub.default = nn_1.predict_classes(sub_x)
 sub.to_csv('Loosers_IITKgp_5.csv', header=False)
 
-########## fifth try
+########## fifth and sixth try ............... xgboost
 sub.default = xgb_model1.predict(sub_x)
 sub.to_csv('Loosers_IITKgp_6.csv', header=False)
+
+########## seventh try ............. knn
+sub.default = knn_1.predict(sub_x)
+sub.to_csv('Loosers_IITKgp_8.csv', header=False)
+
+########## eighth try ............. Naive Bayes
+sub.default = nb_1.predict(sub_x)
+sub.to_csv('Loosers_IITKgp_9.csv', header=False)
