@@ -8,7 +8,7 @@ def model_1(input_size):
     model.add(Dense(32, input_dim=input_size, activation = 'relu'))
     model.add(Dense(1, activation = 'sigmoid'))
 
-    model.compile(optimizer='rmsprop',
+    model.compile(optimizer='adam',
               loss='binary_crossentropy',
               metrics=['accuracy'])
     return model
