@@ -2,49 +2,73 @@ import pandas as pd
 import cv2
 import zipfile
 import numpy as np
+import os
+from tqdm import tqdm
+from skimage.feature import hog
+from skimage.io import imread
+import matplotlib.pyplot as plt
 
-tr_csv = pd.read_csv('data/training.csv')
-#print(tr_csv.head())
+file_name = os.listdir('data/images')
+# print(file_name[0])
+
+# data = zipfile.ZipFile("data/images.zip", 'r')
+# img = data.read('images/1458171560720DSC_0454.png')
+# #print(data.namelist())
+# img = cv2.imdecode(np.frombuffer(img, np.uint8), 1)
+
+def get_data(path):
+	img = data.read(path)
+	
+	img = cv2.imdecode(np.frombuffer(img, np.uint8), 1)
+	return img
+
+def canny(img, t1, t2):
+	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	edge = cv2.Canny(gray, t1, t2)
+	return edge
+
+# for i in tqdm(file_name):
+	# try:
+	# 	edge = canny(get_data('images/'+i), 30, 30)
+	# 	cv2.imwrite('data/edge_data/'+i, edge)
+	# except:
+	# 	print(i)
+
+def hog_tr(frame):
+	features, hog_img = hog(frame, 
+	                        orientations = 11, 
+	                        pixels_per_cell = (8, 8),
+	                        cells_per_block = (2, 2), 
+	                        transform_sqrt = True, 
+	                        visualize = True, 
+	                        feature_vector = True)
+	return hog_img
+  
+def hog_transform(frame):
+	frame = cv2.cvtColor(frame, cv2.COLOR_RGB2YUV)
+	hogA = hog_tr(frame[:,:,0])
+	hogB = hog_tr(frame[:,:,1])
+	hogC = hog_tr(frame[:,:,2])
+	hog = np.dstack([hogA, hogB, hogC])
+
+	return hog
 
 
-data = zipfile.ZipFile("data/images.zip", 'r')
-img = data.read('images/1458171560720DSC_0454.png')
-#print(data.namelist())
-img = cv2.imdecode(np.frombuffer(img, np.uint8), 1)
+img = cv2.imread('data/images/1458172053188DSC_0464.png')
 
-class getdata():
-    def __init__(self, image_names, labels, file_path):
-        assrt len(image_names) == len(labels)
-        self.num_examples = len(image_names)
-        self.names = image_names
-        self.data = {image_names[i]:labels[i] for i in range(len(self.num_examples))}
-        self.epoch = 0
-        self.startofepoch = 0
-        self.path = file_path
-        
-    def nextbatch(self, batch_size):
-        start = self.startofepoch
-        end = start + batch_size
-        
-        if end > self.num_examples:
-            self.epoch += 1
-            
-            perm = np.arange(self.num_examples)
-            np.random.shuffle(perm)
-            
-            self.images = self.images[perm]
-            
-            start = 0
-            end = batch_size
-            
-        self.startofepoch = end
-        return self.get_img_batch(self.images[start:end]), [self.data[i] for i in self.images[start:end]]
+hog_fea = hog_transform(img)
 
-    def get_image(self, data, path):
-    	img = data.read(path)
-    	img = cv2.imdecode(np.frombuffer(img, np.uint8), 1)
-    	return img
+cv2.imshow('hog', hog_fea)
+cv2.waitKey(0)
 
-    def get_img_batch(self, l):
-    	return [self.get_image(i) for i in l]
+cv2.imshow('img', img)
 
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# img = imread('data/images/1458172053188DSC_0464.png')
+
+# hog_fea = hog_transform(img)
+
+# plt.imshow(img)
+# plt.show()
